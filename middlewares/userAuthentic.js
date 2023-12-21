@@ -10,13 +10,13 @@ export const isAuthentic = async (req, resp, next) => {
         })
     }
     const decode = JWT.verify(token, process.env.JWT_KEY)
-    const user = await userModel.findById(decode._id)
-    const {isVerify} = user
-    if(!isVerify){
-        return resp.status(404).send({
-            success: false,
-            message: 'Email not verified, please verify your email'
-        })
-    }
+    req.user = await userModel.findById(decode._id)
+    // const {isVerify} = user
+    // if(!isVerify){
+    //     return resp.status(404).send({
+    //         success: false,
+    //         message: 'Email not verified, please verify your email'
+    //     })
+    // }
     next()
 }

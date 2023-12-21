@@ -18,6 +18,12 @@ app.use(express.json())
 app.use(cors())
 app.use(cookieParser())
 
+app.use(cors({
+    origin: ['http://localhost:3000'],
+    // methods: ['POST', 'GET', 'DELETE', 'PUT', 'PATCH'],
+    credentials: true,
+}));
+
 //import routes
 import appRoute from './routes/appRoute.js'
 import { userModel } from './models/userModel.js';

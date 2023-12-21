@@ -119,7 +119,9 @@ export const logInController = async (req, resp) => {
         const token = await user.tokenGenerate()
 
         resp.status(200).cookie('token', token, {
-            expires: new Date(Date.now() + 1000 * 24 * 60 * 60)
+            expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+            httpOnly: true,
+            secure: true
         }).send({
             success: true,
             message: 'Login Successfully',
@@ -197,7 +199,7 @@ export const emailVerifyController = async (req, resp) => {
 }
 
 
-//getUser
+//get Single User
 export const getUserController = async (req, resp) => {
     try {
         const user = await userModel.findById(req.params.id)
@@ -223,6 +225,32 @@ export const getUserController = async (req, resp) => {
             success: false,
             message: 'getUser API Error',
             error
+        })
+    }
+}
+
+
+//get ALL user
+export const getAllUserController = async(req, resp) => {
+    try {
+        const users = await userModel.find()
+        if(!users){
+            return resp.status(404).send({
+                success : false,
+                message : 'No User Found'
+            })
+        }
+        resp.status(200).send({
+            success : true,
+            totalUsers : users.length,
+            message : 'All user are fetched successfully',
+            users
+        })
+    } catch (error) {
+        resp.status(500).send({
+            success : false,
+            message : 'getAll User API Error',
+            error : error.message
         })
     }
 }
