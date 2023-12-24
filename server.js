@@ -18,11 +18,12 @@ app.use(express.json())
 app.use(cors())
 app.use(cookieParser())
 
-app.use(cors({
-    origin: ['http://localhost:3000'],
-    // methods: ['POST', 'GET', 'DELETE', 'PUT', 'PATCH'],
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Include the necessary HTTP methods
     credentials: true,
-}));
+  };
+app.use(cors(corsOptions));
 
 //import routes
 import appRoute from './routes/appRoute.js'

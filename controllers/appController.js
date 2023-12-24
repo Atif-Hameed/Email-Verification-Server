@@ -85,7 +85,7 @@ export const logInController = async (req, resp) => {
         const { email, password } = req.body
 
         if (!email || !password) {
-            return resp.status(500).send({
+            return resp.status(401).send({
                 success: false,
                 message: 'Please provide all the cridentals'
             })
@@ -210,8 +210,8 @@ export const getUserController = async (req, resp) => {
             })
         }
         resp.status(200).send({
-            success : true,
-            message : 'User Data fetched successfully',
+            success: true,
+            message: 'User Data fetched successfully',
             user
         })
     } catch (error) {
@@ -231,26 +231,26 @@ export const getUserController = async (req, resp) => {
 
 
 //get ALL user
-export const getAllUserController = async(req, resp) => {
+export const getAllUserController = async (req, resp) => {
     try {
         const users = await userModel.find()
-        if(!users){
+        if (!users) {
             return resp.status(404).send({
-                success : false,
-                message : 'No User Found'
+                success: false,
+                message: 'No User Found'
             })
         }
         resp.status(200).send({
-            success : true,
-            totalUsers : users.length,
-            message : 'All user are fetched successfully',
+            success: true,
+            totalUsers: users.length,
+            message: 'All user are fetched successfully',
             users
         })
     } catch (error) {
         resp.status(500).send({
-            success : false,
-            message : 'getAll User API Error',
-            error : error.message
+            success: false,
+            message: 'getAll User API Error',
+            error: error.message
         })
     }
 }
